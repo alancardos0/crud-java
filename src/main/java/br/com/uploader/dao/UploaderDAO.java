@@ -66,6 +66,7 @@ public class UploaderDAO {
 
                 uploader.setTypeImg(rset.getString("typeImg"));
                 uploader.setFile(rset.getString("file"));
+                uploader.setId(rset.getInt("id"));
                 images.add(uploader);
             }
         } catch (SQLException e) {
@@ -88,5 +89,72 @@ public class UploaderDAO {
           }
         }
         return images;
+    }
+
+
+
+    public void putImage(Uploader imageUpdate){
+        String sql = "UPDATE savedimages SET file = ?, typeImg = ? "+
+                "WHERE  id=?";
+
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            conn = ConnectionFactory.createConnectionToMySQL();
+
+            preparedStatement = conn.prepareStatement(sql);
+
+            preparedStatement.setString(1, imageUpdate.getFile());
+            preparedStatement.setString(2, imageUpdate.getTypeImg());
+            preparedStatement.setInt(3, imageUpdate.getId());
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if(conn != null){
+                    conn.close();
+                }
+                if(preparedStatement != null){
+                    preparedStatement.close();
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void deleteImageById(int id){
+        String sql = "DELETE FROM savedimages  WHERE id=?";
+
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+
+        try{
+            conn = ConnectionFactory.createConnectionToMySQL();
+            preparedStatement = conn.prepareStatement(sql);
+
+            preparedStatement.setInt(1,id);
+
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try{
+                if(conn != null){
+                    conn.close();
+                }
+                if(preparedStatement!=null){
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }

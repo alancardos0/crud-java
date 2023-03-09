@@ -8,9 +8,18 @@ public class Main {
         UploaderDAO uploaderDao = new UploaderDAO();
         Uploader uploader = new Uploader();
 
-        uploader.setFile("teste");
+        uploader.setFile("teste23");
         uploader.setTypeImg("jpg");
         uploaderDao.saveImage(uploader);
+
+        //PUT, atualizar imagem.
+        Uploader updateImage = new Uploader();
+        updateImage.setFile("Hello World!");
+        updateImage.setTypeImg("jpg");
+        updateImage.setId(1);
+        uploaderDao.putImage(updateImage);
+
+        uploaderDao.deleteImageById(1);
 
         for(Uploader images : uploaderDao.getImage()){
             System.out.println("Imagens: " + images.getFile());

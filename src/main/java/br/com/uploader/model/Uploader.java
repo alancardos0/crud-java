@@ -4,6 +4,10 @@ public class Uploader {
     private String file;
     private String typeImg;
 
+
+
+    private int id;
+
     public String getFile() {
         return file;
     }
@@ -19,6 +23,11 @@ public class Uploader {
     public void setTypeImg(String typeImg) {
         this.typeImg = typeImg;
     }
-
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
 
 }
